@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 1: 텍스트 분석 도구</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        /* 헤더 스타일 */
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* 파일 업로드 영역 스타일 */
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            background: #f8f9ff;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: #eef1ff;
+            border-color: #764ba2;
+        }
+
+        .upload-area.dragover {
+            background: #e0e7ff;
+            border-color: #764ba2;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .file-label:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .selected-file {
+            margin-top: 15px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* 경고 및 메시지 스타일 */
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .message.info {
+            background: #e7f3ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+
+        /* 결과 영역 스타일 */
+        .results {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        td {
+            background: white;
+        }
+
+        td:first-child {
+            font-weight: 600;
+            color: #667eea;
+            width: 60%;
+        }
+
+        td:last-child {
+            text-align: center;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        tr:hover td {
+            background: #f8f9ff;
+        }
+
+        /* 링크 섹션 스타일 */
+        .links-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .links-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .link-button {
+            display: block;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .link-button.current {
+            background: #333;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <h1>📊 과제 1: 텍스트 분석 도구</h1>
+        <p class="subtitle">한글/영문 텍스트 파일을 분석하여 다양한 통계 정보를 제공합니다</p>
+
+        <!-- 메시지 영역 -->
+        <div id="messageArea" class="message"></div>
+
+        <!-- 파일 업로드 영역 -->
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📄</div>
+            <p style="font-size: 1.2em; color: #667eea; margin-bottom: 10px;">
+                텍스트 파일을 드래그하거나 클릭하여 업로드하세요
+            </p>
+            <p style="color: #999; font-size: 0.9em;">(.txt 파일만 지원, 최대 10MB)</p>
+            <label for="fileInput" class="file-label">파일 선택</label>
+            <input type="file" id="fileInput" accept=".txt" />
+            <div class="selected-file" id="selectedFile"></div>
+        </div>
+
+        <!-- 결과 영역 -->
+        <div class="results" id="results">
+            <h2>📈 분석 결과</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>값</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTable">
+                    <!-- JavaScript로 동적 생성 -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 다른 과제 링크 -->
+        <div class="links-section">
+            <h3>🔗 다른 과제 바로가기</h3>
+            <div class="links-grid">
+                <a href="index.html" class="link-button current">과제 1</a>
+                <a href="task2.html" class="link-button">과제 2</a>
+                <a href="task3.html" class="link-button">과제 3</a>
+                <a href="task4.html" class="link-button">과제 4</a>
+                <a href="task5.html" class="link-button">과제 5</a>
+                <a href="task6.html" class="link-button">과제 6</a>
+                <a href="task7.html" class="link-button">과제 7</a>
+                <a href="task8.html" class="link-button">과제 8</a>
+                <a href="task9.html" class="link-button">과제 9</a>
+                <a href="task10.html" class="link-button">과제 10</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM 요소 가져오기
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const selectedFile = document.getElementById('selectedFile');
+        const messageArea = document.getElementById('messageArea');
+        const results = document.getElementById('results');
+        const resultsTable = document.getElementById('resultsTable');
+
+        // 파일 크기 제한 (10MB)
+        const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+        /**
+         * 메시지 표시 함수
+         * @param {string} message - 표시할 메시지
+         * @param {string} type - 메시지 타입 (error, warning, info)
+         */
+        function showMessage(message, type = 'info') {
+            messageArea.textContent = message;
+            messageArea.className = `message ${type}`;
+            messageArea.style.display = 'block';
+
+            // 3초 후 자동으로 메시지 숨김
+            setTimeout(() => {
+                messageArea.style.display = 'none';
+            }, 3000);
+        }
+
+        /**
+         * 텍스트 분석 함수
+         * @param {string} text - 분석할 텍스트
+         * @param {string} filename - 파일명
+         */
+        function analyzeText(text, filename) {
+            // 빈 파일 체크
+            if (!text || text.trim().length === 0) {
+                showMessage('빈 파일입니다', 'warning');
+                results.style.display = 'none';
+                return;
+            }
+
+            // 1. 총 문자 수 (공백 포함/제외)
+            const totalCharsWithSpace = text.length;
+            const totalCharsWithoutSpace = text.replace(/\s/g, '').length;
+
+            // 2. 단어 수 계산 (한글: 어절, 영문: 띄어쓰기 기준)
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const totalWords = words.length;
+
+            // 3. 문장 수 계산 (., !, ? 기준)
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            const totalSentences = sentences.length;
+
+            // 4. 한글 문자 수 (가-힣: 완성형 한글, ㄱ-ㅎ: 자음, ㅏ-ㅣ: 모음)
+            const koreanChars = text.match(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g);
+            const koreanCount = koreanChars ? koreanChars.length : 0;
+
+            // 5. 영문 문자 수 (a-z, A-Z)
+            const englishChars = text.match(/[a-zA-Z]/g);
+            const englishCount = englishChars ? englishChars.length : 0;
+
+            // 6. 숫자 문자 수 (0-9)
+            const digitChars = text.match(/[0-9]/g);
+            const digitCount = digitChars ? digitChars.length : 0;
+
+            // 7. 특수문자 수 (한글, 영문, 숫자, 공백을 제외한 모든 문자)
+            const specialChars = text.match(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s]/g);
+            const specialCount = specialChars ? specialChars.length : 0;
+
+            // 결과 테이블 생성
+            const resultData = [
+                { label: '📁 파일명', value: filename },
+                { label: '📝 총 문자 수 (공백 포함)', value: totalCharsWithSpace.toLocaleString() },
+                { label: '📝 총 문자 수 (공백 제외)', value: totalCharsWithoutSpace.toLocaleString() },
+                { label: '📖 총 단어 수', value: totalWords.toLocaleString() },
+                { label: '📄 총 문장 수', value: totalSentences.toLocaleString() },
+                { label: '🇰🇷 한글 문자 수', value: koreanCount.toLocaleString() },
+                { label: '🇺🇸 영문 문자 수', value: englishCount.toLocaleString() },
+                { label: '🔢 숫자 문자 수', value: digitCount.toLocaleString() },
+                { label: '✨ 특수문자 수', value: specialCount.toLocaleString() }
+            ];
+
+            // 테이블에 결과 추가
+            resultsTable.innerHTML = resultData.map(item => `
+                <tr>
+                    <td>${item.label}</td>
+                    <td>${item.value}</td>
+                </tr>
+            `).join('');
+
+            // 결과 영역 표시
+            results.style.display = 'block';
+            showMessage('분석이 완료되었습니다!', 'info');
+        }
+
+        /**
+         * 파일 읽기 함수 (인코딩 오류 처리 포함)
+         * @param {File} file - 읽을 파일
+         */
+        function readFile(file) {
+            // 파일 형식 체크
+            if (!file.name.endsWith('.txt')) {
+                showMessage('잘못된 파일 형식입니다. .txt 파일만 업로드 가능합니다.', 'error');
+                return;
+            }
+
+            // 파일 크기 체크 (10MB 제한)
+            if (file.size > MAX_FILE_SIZE) {
+                showMessage(`파일 크기가 너무 큽니다. 최대 10MB까지 업로드 가능합니다. (현재: ${(file.size / 1024 / 1024).toFixed(2)}MB)`, 'warning');
+                return;
+            }
+
+            // FileReader를 사용하여 파일 읽기
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const text = e.target.result;
+                analyzeText(text, file.name);
+            };
+
+            reader.onerror = function() {
+                showMessage('파일 읽기 중 오류가 발생했습니다. 파일 인코딩을 확인해주세요.', 'error');
+            };
+
+            // UTF-8로 파일 읽기 시도
+            // 브라우저의 FileReader는 기본적으로 UTF-8을 사용하며,
+            // 다른 인코딩(cp949, euc-kr)은 JavaScript만으로는 처리가 어렵습니다.
+            // 실제 프로덕션 환경에서는 서버 사이드에서 처리하거나
+            // encoding 라이브러리를 사용해야 합니다.
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        /**
+         * 파일 선택 이벤트 핸들러
+         */
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+
+            if (!file) {
+                showMessage('파일을 선택해주세요', 'warning');
+                selectedFile.textContent = '';
+                return;
+            }
+
+            selectedFile.textContent = `선택된 파일: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+            readFile(file);
+        });
+
+        /**
+         * 드래그 앤 드롭 이벤트 핸들러
+         */
+        // 업로드 영역 클릭시 파일 선택 창 열기
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // 드래그 오버 이벤트
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        // 드래그 리브 이벤트
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+
+        // 드롭 이벤트
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+
+            const file = e.dataTransfer.files[0];
+
+            if (file) {
+                // 수동으로 파일 입력에 파일 설정 (보안상 제한이 있을 수 있음)
+                selectedFile.textContent = `선택된 파일: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                readFile(file);
+            }
+        });
+    </script>
+</body>
+</html>
