@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 5: 로그 분석 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        .stat-box { display: inline-block; background: #667eea; color: white; padding: 20px; margin: 10px; border-radius: 10px; min-width: 150px; text-align: center; }
+        .stat-box .number { font-size: 2em; font-weight: bold; }
+        .log-item { padding: 10px; margin: 5px 0; border-left: 4px solid; }
+        .log-item.INFO { border-left-color: #2196f3; background: #e3f2fd; }
+        .log-item.WARNING { border-left-color: #ff9800; background: #fff3e0; }
+        .log-item.ERROR { border-left-color: #f44336; background: #ffebee; }
+        .log-item.CRITICAL { border-left-color: #9c27b0; background: #f3e5f5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 과제 5: 시스템 접근 로그 분석</h1>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <div class="stat-box"><div class="number">10</div><div>총 로그</div></div>
+            <div class="stat-box"><div class="number">5</div><div>INFO</div></div>
+            <div class="stat-box"><div class="number">2</div><div>WARNING</div></div>
+            <div class="stat-box"><div class="number">2</div><div>ERROR</div></div>
+            <div class="stat-box"><div class="number">1</div><div>CRITICAL</div></div>
+        </div>
+
+        <h2 style="color: #667eea; margin: 20px 0;">🚨 보안 이슈</h2>
+        <div class="log-item ERROR">로그인 3회 실패: user=park_ms, IP=192.168.1.102</div>
+        <div class="log-item ERROR">권한 거부: user=jung_sh, resource=/admin/settings</div>
+        <div class="log-item CRITICAL">시스템 오류: Database connection failed</div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3 실습 과제 모음</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .task-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .task-card .task-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .task-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .task-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .task-card .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .task-card .tech-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #667eea;
+        }
+
+        .task-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .task-card {
+            position: relative;
+        }
+
+        .task-card.coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .task-card.coming-soon:hover {
+            transform: none;
+        }
+
+        .task-card.coming-soon::before {
+            content: 'Coming Soon';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #999;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .tasks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Day 3 실습 과제 모음</h1>
+            <p class="subtitle">Python & JavaScript 프로그래밍 실습 프로젝트</p>
+        </header>
+
+        <div class="tasks-grid">
+            <!-- 과제 1 -->
+            <a href="task1/index.html" class="task-card completed">
+                <div class="task-number">과제 1</div>
+                <h2>📊 텍스트 분석 도구</h2>
+                <p>한글과 영문 텍스트 파일을 분석하여 문자 수, 단어 수, 문장 수 등 다양한 통계 정보를 제공하는 웹 기반 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">정규표현식</span>
+                </div>
+            </a>
+
+            <!-- 과제 2 -->
+            <a href="task2/index.html" class="task-card completed">
+                <div class="task-number">과제 2</div>
+                <h2>🔒 개인정보 마스킹 도구</h2>
+                <p>텍스트에서 주민등록번호, 전화번호, 이메일, 주소, 신용카드번호를 자동으로 탐지하고 안전하게 마스킹 처리합니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">HTML/CSS/JS</span>
+                    <span class="tech-tag">정규표현식</span>
+                    <span class="tech-tag">보안</span>
+                </div>
+            </a>
+
+            <!-- 과제 3 -->
+            <a href="task3/result3.html" class="task-card completed">
+                <div class="task-number">과제 3</div>
+                <h2>🔄 CSV ↔ JSON 변환기</h2>
+                <p>CSV와 JSON 형식 간 양방향 데이터 변환 및 무결성 검증을 수행하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">CSV</span>
+                    <span class="tech-tag">JSON</span>
+                    <span class="tech-tag">데이터 변환</span>
+                </div>
+            </a>
+
+            <!-- 과제 4 -->
+            <a href="task4/result4.html" class="task-card completed">
+                <div class="task-number">과제 4</div>
+                <h2>🔐 비밀번호 강도 검증</h2>
+                <p>정부 보안 기준에 따른 비밀번호 강도 측정 및 개선 방안 제시 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">보안</span>
+                    <span class="tech-tag">정규표현식</span>
+                </div>
+            </a>
+
+            <!-- 과제 5 -->
+            <a href="task5/result5.html" class="task-card completed">
+                <div class="task-number">과제 5</div>
+                <h2>📊 로그 분석 시스템</h2>
+                <p>시스템 접근 로그를 분석하고 보안 위협 패턴을 탐지하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">로그 분석</span>
+                    <span class="tech-tag">보안</span>
+                </div>
+            </a>
+
+            <!-- 과제 6 -->
+            <a href="task6/result6.html" class="task-card completed">
+                <div class="task-number">과제 6</div>
+                <h2>🔒 암호화 유틸리티</h2>
+                <p>AES-256 기반 파일 암호화 및 복호화 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">암호화</span>
+                    <span class="tech-tag">AES-256</span>
+                </div>
+            </a>
+
+            <!-- 과제 7 -->
+            <a href="task7/result7.html" class="task-card completed">
+                <div class="task-number">과제 7</div>
+                <h2>📝 코드 문서화 도구</h2>
+                <p>Python 코드에 Google Style docstring을 자동으로 생성하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">문서화</span>
+                    <span class="tech-tag">AST</span>
+                </div>
+            </a>
+
+            <!-- 과제 8 -->
+            <a href="task8/result8.html" class="task-card completed">
+                <div class="task-number">과제 8</div>
+                <h2>✅ 데이터 검증기</h2>
+                <p>JSON 데이터의 유효성을 검사하고 상세한 오류 보고서를 생성하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">JSON</span>
+                    <span class="tech-tag">데이터 검증</span>
+                </div>
+            </a>
+
+            <!-- 과제 9 -->
+            <a href="task9/result9.html" class="task-card completed">
+                <div class="task-number">과제 9</div>
+                <h2>📄 정부 보고서 생성기</h2>
+                <p>JSON 데이터를 정부 공문서 스타일의 HTML 보고서로 변환하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">JSON</span>
+                    <span class="tech-tag">보고서</span>
+                </div>
+            </a>
+
+            <!-- 과제 10 -->
+            <a href="task10/result10.html" class="task-card completed">
+                <div class="task-number">과제 10</div>
+                <h2>🤖 파일 자동화 도구</h2>
+                <p>파일 백업, 정리, 중복 파일 탐지 등을 자동화하는 도구입니다.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">자동화</span>
+                    <span class="tech-tag">파일 관리</span>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Day 3 실습 과제. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                Made with 💜 using HTML, CSS, JavaScript & Python
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

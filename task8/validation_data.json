@@ -1,0 +1,28 @@
+{
+  "employees": [
+    {
+      "id": "EMP001",
+      "name": "김철수",
+      "email": "kim@example.com",
+      "phone": "010-1234-5678",
+      "department": "개발팀",
+      "salary": 50000000
+    },
+    {
+      "id": "EMP002",
+      "name": "이영희",
+      "email": "invalid-email",
+      "phone": "010-9876-5432",
+      "department": "기획팀",
+      "salary": 45000000
+    },
+    {
+      "id": "EMP001",
+      "name": "박민수",
+      "email": "park@example.com",
+      "phone": "010",
+      "department": "",
+      "salary": -1000
+    }
+  ]
+}

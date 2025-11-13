@@ -1,0 +1,8 @@
+테스트 케이스 3: 이메일 마스킹 테스트
+
+관리자: admin@company.com
+지원팀: support@example.co.kr
+문의: contact@test.org
+정보: info@sample.net
+안녕: hello@world.com
+개인: chulsoo.kim@gov.kr

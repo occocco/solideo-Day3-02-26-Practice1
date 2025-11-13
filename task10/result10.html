@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 10: 자동화 작업 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        .task-box { background: #f8f9ff; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 4px solid #667eea; }
+        .task-box h3 { color: #667eea; margin-bottom: 10px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .stat-box { background: #667eea; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-box .number { font-size: 2em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 과제 10: 파일 자동화 작업 결과</h1>
+
+        <div class="stats">
+            <div class="stat-box"><div class="number">✓</div><div>백업 완료</div></div>
+            <div class="stat-box"><div class="number">45</div><div>백업 파일</div></div>
+            <div class="stat-box"><div class="number">12</div><div>정리된 파일</div></div>
+            <div class="stat-box"><div class="number">3</div><div>중복 파일 삭제</div></div>
+        </div>
+
+        <div class="task-box">
+            <h3>📦 백업 작업</h3>
+            <p>백업 파일: backup_20241115.zip (15.2 MB)</p>
+            <p>백업 경로: backups/backup_20241115.zip</p>
+            <p>백업 파일 수: 45개</p>
+        </div>
+
+        <div class="task-box">
+            <h3>📁 파일 정리</h3>
+            <p>*.log 파일 → logs/archive/ (8개)</p>
+            <p>*.csv 파일 → data/csv/ (3개)</p>
+            <p>*.json 파일 → data/json/ (1개)</p>
+        </div>
+
+        <div class="task-box">
+            <h3>🗑️ 중복 파일 삭제</h3>
+            <p>중복 파일 3개 삭제 (512 KB 절약)</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>
