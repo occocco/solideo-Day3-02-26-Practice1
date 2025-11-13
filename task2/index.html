@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 2: 개인정보 마스킹 도구</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        /* 헤더 스타일 */
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* 섹션 스타일 */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        /* 파일 업로드 영역 */
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            background: #f8f9ff;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: #eef1ff;
+            border-color: #764ba2;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .file-label:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 마스킹 규칙 설명 */
+        .masking-rules {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .masking-rules h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .masking-rules ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .masking-rules li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .masking-rules li:last-child {
+            border-bottom: none;
+        }
+
+        .masking-rules code {
+            background: #e0e7ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* 결과 영역 */
+        .results {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-box {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .result-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .result-box pre {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* 통계 박스 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-box .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* 테스트 케이스 그리드 */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .test-button {
+            display: block;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+
+        .test-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .test-button .test-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .test-button .test-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* 메시지 */
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .message.success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .message.info {
+            background: #e7f3ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+
+        /* 링크 섹션 */
+        .links-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .links-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .link-button {
+            display: block;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .link-button.current {
+            background: #333;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .result-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .test-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <h1>🔒 과제 2: 개인정보 마스킹 도구</h1>
+        <p class="subtitle">개인정보를 자동으로 탐지하고 안전하게 마스킹 처리합니다</p>
+
+        <!-- 메시지 영역 -->
+        <div id="messageArea" class="message"></div>
+
+        <!-- 마스킹 규칙 설명 -->
+        <div class="masking-rules">
+            <h3>📋 마스킹 규칙</h3>
+            <ul>
+                <li>🆔 주민등록번호: 뒷자리 전체 마스킹 <code>123456-1*******</code></li>
+                <li>📱 전화번호: 중간 4자리 마스킹 <code>010-****-5678</code></li>
+                <li>📧 이메일: @ 앞 부분 50% 마스킹 <code>chu****@gov.kr</code></li>
+                <li>🏠 주소: 상세주소 마스킹 <code>서울시 종로구 ****</code></li>
+                <li>💳 신용카드: 중간 8자리 마스킹 <code>1234-****-****-5678</code></li>
+            </ul>
+        </div>
+
+        <!-- 파일 업로드 영역 -->
+        <div class="section">
+            <h2>📤 파일 업로드</h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">🔐</div>
+                <p style="font-size: 1.2em; color: #667eea; margin-bottom: 10px;">
+                    개인정보가 포함된 텍스트 파일을 업로드하세요
+                </p>
+                <p style="color: #999; font-size: 0.9em;">(.txt 파일만 지원)</p>
+                <label for="fileInput" class="file-label">파일 선택</label>
+                <input type="file" id="fileInput" accept=".txt" />
+            </div>
+        </div>
+
+        <!-- 결과 영역 -->
+        <div class="results" id="results">
+            <h2>📊 마스킹 결과</h2>
+
+            <!-- 통계 -->
+            <div class="stats-grid" id="statsGrid">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+
+            <!-- 원본/마스킹 비교 -->
+            <div class="result-comparison">
+                <div class="result-box">
+                    <h3>📄 원본 텍스트</h3>
+                    <pre id="originalText"></pre>
+                </div>
+                <div class="result-box">
+                    <h3>🔒 마스킹된 텍스트</h3>
+                    <pre id="maskedText"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테스트 케이스 -->
+        <div class="section">
+            <h2>🧪 테스트 케이스</h2>
+            <p style="margin-bottom: 20px; color: #666;">
+                다양한 시나리오를 테스트해보세요. 각 버튼을 클릭하면 해당 테스트 결과를 확인할 수 있습니다.
+            </p>
+            <div class="test-grid">
+                <button class="test-button" onclick="runTest(1)">
+                    <div class="test-number">테스트 1</div>
+                    <div class="test-desc">주민번호 마스킹</div>
+                </button>
+                <button class="test-button" onclick="runTest(2)">
+                    <div class="test-number">테스트 2</div>
+                    <div class="test-desc">전화번호 마스킹</div>
+                </button>
+                <button class="test-button" onclick="runTest(3)">
+                    <div class="test-number">테스트 3</div>
+                    <div class="test-desc">이메일 마스킹</div>
+                </button>
+                <button class="test-button" onclick="runTest(4)">
+                    <div class="test-number">테스트 4</div>
+                    <div class="test-desc">신용카드 마스킹</div>
+                </button>
+                <button class="test-button" onclick="runTest(5)">
+                    <div class="test-number">테스트 5</div>
+                    <div class="test-desc">주소 마스킹</div>
+                </button>
+                <button class="test-button" onclick="runTest(6)">
+                    <div class="test-number">테스트 6</div>
+                    <div class="test-desc">혼합 정보</div>
+                </button>
+                <button class="test-button" onclick="runTest(7)">
+                    <div class="test-number">테스트 7</div>
+                    <div class="test-desc">하이픈 없는 형식</div>
+                </button>
+                <button class="test-button" onclick="runTest(8)">
+                    <div class="test-number">테스트 8</div>
+                    <div class="test-desc">빈 파일</div>
+                </button>
+                <button class="test-button" onclick="runTest(9)">
+                    <div class="test-number">테스트 9</div>
+                    <div class="test-desc">개인정보 없음</div>
+                </button>
+                <button class="test-button" onclick="runTest(10)">
+                    <div class="test-number">테스트 10</div>
+                    <div class="test-desc">대량 데이터</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 다른 과제 링크 -->
+        <div class="links-section">
+            <h3>🔗 다른 과제 바로가기</h3>
+            <div class="links-grid">
+                <a href="../task1/index.html" class="link-button">과제 1</a>
+                <a href="index.html" class="link-button current">과제 2</a>
+                <a href="../task3/index.html" class="link-button">과제 3</a>
+                <a href="../task4/index.html" class="link-button">과제 4</a>
+                <a href="../task5/index.html" class="link-button">과제 5</a>
+                <a href="../task6/index.html" class="link-button">과제 6</a>
+                <a href="../task7/index.html" class="link-button">과제 7</a>
+                <a href="../task8/index.html" class="link-button">과제 8</a>
+                <a href="../task9/index.html" class="link-button">과제 9</a>
+                <a href="../task10/index.html" class="link-button">과제 10</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM 요소
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const messageArea = document.getElementById('messageArea');
+        const results = document.getElementById('results');
+        const originalText = document.getElementById('originalText');
+        const maskedText = document.getElementById('maskedText');
+        const statsGrid = document.getElementById('statsGrid');
+
+        /**
+         * 메시지 표시 함수
+         */
+        function showMessage(message, type = 'info') {
+            messageArea.textContent = message;
+            messageArea.className = `message ${type}`;
+            messageArea.style.display = 'block';
+            setTimeout(() => {
+                messageArea.style.display = 'none';
+            }, 3000);
+        }
+
+        /**
+         * 주민등록번호 마스킹
+         */
+        function maskResidentNumber(text) {
+            let count = 0;
+            // 하이픈 있는 경우
+            text = text.replace(/\b(\d{6})-(\d{7})\b/g, (match, p1, p2) => {
+                count++;
+                return `${p1}-${p2[0]}${'*'.repeat(6)}`;
+            });
+            // 하이픈 없는 경우
+            text = text.replace(/(?<!\d)(\d{6})(\d{7})(?!\d)/g, (match, p1, p2) => {
+                count++;
+                return `${p1}${p2[0]}${'*'.repeat(6)}`;
+            });
+            return { text, count };
+        }
+
+        /**
+         * 전화번호 마스킹
+         */
+        function maskPhoneNumber(text) {
+            let count = 0;
+            // 휴대폰 (하이픈 있음)
+            text = text.replace(/\b(01[0-9])-(\d{3,4})-(\d{4})\b/g, (match, p1, p2, p3) => {
+                count++;
+                return `${p1}-${'*'.repeat(p2.length)}-${p3}`;
+            });
+            // 휴대폰 (하이픈 없음)
+            text = text.replace(/\b(01[0-9])(\d{3,4})(\d{4})\b/g, (match, p1, p2, p3) => {
+                count++;
+                return `${p1}${'*'.repeat(p2.length)}${p3}`;
+            });
+            // 일반 전화
+            text = text.replace(/\b(0\d{1,2})-(\d{3,4})-(\d{4})\b/g, (match, p1, p2, p3) => {
+                count++;
+                return `${p1}-${'*'.repeat(p2.length)}-${p3}`;
+            });
+            return { text, count };
+        }
+
+        /**
+         * 이메일 마스킹
+         */
+        function maskEmail(text) {
+            let count = 0;
+            text = text.replace(/\b([a-zA-Z0-9._-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\b/g, (match, username, domain) => {
+                count++;
+                const visibleLength = Math.max(1, Math.floor(username.length / 2));
+                const masked = username.substring(0, visibleLength) + '*'.repeat(username.length - visibleLength);
+                return `${masked}@${domain}`;
+            });
+            return { text, count };
+        }
+
+        /**
+         * 신용카드 마스킹
+         */
+        function maskCreditCard(text) {
+            let count = 0;
+            // 하이픈 있음
+            text = text.replace(/\b(\d{4})-(\d{4})-(\d{4})-(\d{4})\b/g, (match, p1, p2, p3, p4) => {
+                count++;
+                return `${p1}-****-****-${p4}`;
+            });
+            // 하이픈 없음 (16자리)
+            text = text.replace(/(?<!\d)(\d{4})(\d{4})(\d{4})(\d{4})(?!\d)/g, (match, p1, p2, p3, p4) => {
+                count++;
+                return `${p1}********${p4}`;
+            });
+            return { text, count };
+        }
+
+        /**
+         * 주소 마스킹
+         */
+        function maskAddress(text) {
+            let count = 0;
+            // 전체 주소 패턴
+            const pattern1 = /(서울특별시|서울시|서울|부산광역시|부산시|부산|대구광역시|대구시|대구|인천광역시|인천시|인천|광주광역시|광주시|광주|대전광역시|대전시|대전|울산광역시|울산시|울산|세종특별자치시|세종시|세종|경기도|강원도|충청북도|충북|충청남도|충남|전라북도|전북|전라남도|전남|경상북도|경북|경상남도|경남|제주특별자치도|제주도|제주)\s+([가-힣]+(?:구|군))\s+([가-힣0-9\s]+(?:로|길|대로|번길|가|동|리)[0-9\s-]*[가-힣0-9]*)/g;
+            text = text.replace(pattern1, (match, p1, p2, p3) => {
+                count++;
+                return `${p1} ${p2} ****`;
+            });
+            // 간단한 주소 패턴
+            const pattern2 = /([가-힣]+(?:구|군))\s+([가-힣]+동)\s+([0-9-]+(?:번지|번)?)/g;
+            text = text.replace(pattern2, (match, p1, p2, p3) => {
+                count++;
+                return `${p1} ${p2} ****`;
+            });
+            return { text, count };
+        }
+
+        /**
+         * 모든 개인정보 마스킹
+         */
+        function maskAllPersonalInfo(text) {
+            const stats = {
+                resident_number: 0,
+                phone_number: 0,
+                email: 0,
+                address: 0,
+                credit_card: 0
+            };
+
+            // 순서 중요: 더 구체적인 패턴을 먼저
+            let result = maskResidentNumber(text);
+            text = result.text;
+            stats.resident_number = result.count;
+
+            result = maskCreditCard(text);
+            text = result.text;
+            stats.credit_card = result.count;
+
+            result = maskPhoneNumber(text);
+            text = result.text;
+            stats.phone_number = result.count;
+
+            result = maskEmail(text);
+            text = result.text;
+            stats.email = result.count;
+
+            result = maskAddress(text);
+            text = result.text;
+            stats.address = result.count;
+
+            return { text, stats };
+        }
+
+        /**
+         * 통계 표시
+         */
+        function displayStats(stats) {
+            const items = [
+                { label: '주민번호', count: stats.resident_number, icon: '🆔' },
+                { label: '전화번호', count: stats.phone_number, icon: '📱' },
+                { label: '이메일', count: stats.email, icon: '📧' },
+                { label: '주소', count: stats.address, icon: '🏠' },
+                { label: '신용카드', count: stats.credit_card, icon: '💳' }
+            ];
+
+            statsGrid.innerHTML = items.map(item => `
+                <div class="stat-box">
+                    <div class="number">${item.icon} ${item.count}</div>
+                    <div class="label">${item.label}</div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * 파일 처리
+         */
+        function processFile(file) {
+            if (!file) {
+                showMessage('파일을 선택해주세요', 'error');
+                return;
+            }
+
+            if (!file.name.endsWith('.txt')) {
+                showMessage('잘못된 파일 형식입니다. .txt 파일만 업로드 가능합니다.', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const content = e.target.result;
+
+                if (!content.trim()) {
+                    showMessage('빈 파일입니다', 'error');
+                    results.style.display = 'none';
+                    return;
+                }
+
+                const result = maskAllPersonalInfo(content);
+                const total = Object.values(result.stats).reduce((a, b) => a + b, 0);
+
+                if (total === 0) {
+                    showMessage('탐지된 개인정보가 없습니다', 'info');
+                } else {
+                    showMessage(`총 ${total}개의 개인정보가 탐지되었습니다`, 'success');
+                }
+
+                originalText.textContent = content;
+                maskedText.textContent = result.text;
+                displayStats(result.stats);
+                results.style.display = 'block';
+            };
+
+            reader.onerror = function() {
+                showMessage('파일 읽기 중 오류가 발생했습니다', 'error');
+            };
+
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        /**
+         * 테스트 케이스 실행
+         */
+        function runTest(testNumber) {
+            const testFile = `test_case${testNumber}.txt`;
+
+            fetch(testFile)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('파일을 찾을 수 없습니다');
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    if (!content.trim()) {
+                        showMessage('빈 파일입니다', 'error');
+                        results.style.display = 'none';
+                        return;
+                    }
+
+                    const result = maskAllPersonalInfo(content);
+                    const total = Object.values(result.stats).reduce((a, b) => a + b, 0);
+
+                    if (total === 0) {
+                        showMessage(`테스트 ${testNumber}: 탐지된 개인정보가 없습니다`, 'info');
+                    } else {
+                        showMessage(`테스트 ${testNumber}: ${total}개의 개인정보가 탐지되었습니다`, 'success');
+                    }
+
+                    originalText.textContent = content;
+                    maskedText.textContent = result.text;
+                    displayStats(result.stats);
+                    results.style.display = 'block';
+
+                    // 결과로 스크롤
+                    results.scrollIntoView({ behavior: 'smooth' });
+                })
+                .catch(error => {
+                    showMessage(`테스트 ${testNumber} 실행 실패: ${error.message}`, 'error');
+                });
+        }
+
+        // 이벤트 리스너
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            processFile(file);
+        });
+
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // 드래그 앤 드롭
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.style.background = '#e0e7ff';
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.style.background = '#f8f9ff';
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.style.background = '#f8f9ff';
+            const file = e.dataTransfer.files[0];
+            processFile(file);
+        });
+    </script>
+</body>
+</html>
