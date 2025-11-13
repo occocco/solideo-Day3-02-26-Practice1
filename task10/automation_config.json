@@ -1,0 +1,20 @@
+{
+  "backup": {
+    "source_dir": "project_files",
+    "backup_dir": "backups",
+    "exclude_patterns": ["*.tmp", "*.cache", "*.log"]
+  },
+  "organize": {
+    "rules": [
+      {"pattern": "*.log", "destination": "logs/archive"},
+      {"pattern": "*.csv", "destination": "data/csv"},
+      {"pattern": "*.json", "destination": "data/json"}
+    ],
+    "older_than_days": 30
+  },
+  "cleanup": {
+    "delete_empty_folders": true,
+    "find_duplicates": true
+  },
+  "dry_run": false
+}

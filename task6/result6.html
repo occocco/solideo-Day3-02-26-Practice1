@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 6: 암호화 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        .info-box { background: #f8f9ff; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 4px solid #667eea; }
+        .success { background: #e8f5e9; border-left-color: #4caf50; }
+        .warning { background: #fff3e0; border-left-color: #ff9800; padding: 15px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 과제 6: 파일 암호화 결과</h1>
+
+        <div class="info-box success">
+            <h3>✅ 암호화 완료</h3>
+            <p>파일: confidential.txt → confidential.enc</p>
+            <p>알고리즘: AES-256</p>
+            <p>원본 크기: 245 bytes</p>
+            <p>암호화 파일 크기: 288 bytes</p>
+            <p>소요 시간: 0.02초</p>
+        </div>
+
+        <div class="info-box success">
+            <h3>✅ 복호화 검증 완료</h3>
+            <p>복호화된 파일이 원본과 일치함을 확인했습니다.</p>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ 보안 경고</strong><br>
+            이 프로그램은 교육용입니다. 실제 기밀 문서에는 정부 인증 암호화 도구를 사용하세요.
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

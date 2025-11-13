@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>정부 보고서</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nanum Gothic', '나눔고딕', sans-serif; background: white; }
+        .cover { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; }
+        .cover h1 { font-size: 3em; margin-bottom: 20px; }
+        .container { max-width: 1000px; margin: 50px auto; padding: 40px; }
+        h2 { color: #1a237e; border-bottom: 3px solid #1a237e; padding-bottom: 10px; margin: 30px 0 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        th { background: #1a237e; color: white; }
+        .summary-box { display: inline-block; background: #e3f2fd; padding: 20px; margin: 10px; border-radius: 10px; min-width: 200px; text-align: center; }
+        .summary-box .number { font-size: 2.5em; font-weight: bold; color: #1a237e; }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>디지털 행정 서비스 현황 보고서</h1>
+        <p style="font-size: 1.5em; margin-top: 20px;">2024년 11월 15일</p>
+        <p style="font-size: 1.2em; margin-top: 10px;">행정안전부</p>
+    </div>
+
+    <div class="container">
+        <h2>1. 요약</h2>
+        <div style="text-align: center; margin: 30px 0;">
+            <div class="summary-box"><div class="number">150</div><div>총 서비스</div></div>
+            <div class="summary-box"><div class="number">25</div><div>신규 서비스</div></div>
+            <div class="summary-box"><div class="number">40</div><div>개선 서비스</div></div>
+            <div class="summary-box"><div class="number">4.3</div><div>평균 만족도</div></div>
+        </div>
+
+        <h2>2. 부서별 현황</h2>
+        <table>
+            <tr><th>부서명</th><th>서비스 수</th><th>사용자 수</th><th>만족도</th></tr>
+            <tr><td>행정안전부</td><td>45</td><td>12,500,000</td><td>4.2</td></tr>
+            <tr><td>과학기술정보통신부</td><td>38</td><td>15,800,000</td><td>4.5</td></tr>
+            <tr><td>국토교통부</td><td>32</td><td>9,200,000</td><td>3.9</td></tr>
+        </table>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: #1a237e; color: white; text-decoration: none; border-radius: 5px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

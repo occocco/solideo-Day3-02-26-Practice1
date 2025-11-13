@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 7: 코드 문서화 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 과제 7: 코드 문서화 결과</h1>
+        <h2 style="color: #667eea; margin: 20px 0;">문서화된 코드</h2>
+        <pre>
+def validate_korean_id(id_number):
+    """
+    주민등록번호 유효성 검사
+
+    Args:
+        id_number (str): 검사할 주민등록번호 (13자리)
+
+    Returns:
+        bool: 유효한 경우 True, 그렇지 않으면 False
+    """
+    if len(id_number) != 13:
+        return False
+    return True
+
+def mask_sensitive_data(text, pattern):
+    """
+    민감한 데이터를 마스킹 처리
+
+    Args:
+        text (str): 원본 텍스트
+        pattern (str): 정규표현식 패턴
+
+    Returns:
+        str: 마스킹 처리된 텍스트
+    """
+    import re
+    return re.sub(pattern, '***', text)
+        </pre>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>과제 8: 데이터 검증 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: #667eea; color: white; }
+        .error { background: #ffebee; }
+        .warning { background: #fff3e0; }
+        .success { background: #e8f5e9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ 과제 8: 데이터 검증 결과</h1>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="display: inline-block; background: #667eea; color: white; padding: 20px; margin: 10px; border-radius: 10px;">
+                <div style="font-size: 2em; font-weight: bold;">3</div>
+                <div>총 레코드</div>
+            </div>
+            <div style="display: inline-block; background: #f44336; color: white; padding: 20px; margin: 10px; border-radius: 10px;">
+                <div style="font-size: 2em; font-weight: bold;">5</div>
+                <div>오류</div>
+            </div>
+            <div style="display: inline-block; background: #4caf50; color: white; padding: 20px; margin: 10px; border-radius: 10px;">
+                <div style="font-size: 2em; font-weight: bold;">1</div>
+                <div>정상</div>
+            </div>
+        </div>
+
+        <h2 style="color: #667eea; margin: 20px 0;">오류 목록</h2>
+        <table>
+            <tr><th>행</th><th>필드</th><th>오류 내용</th><th>수정 제안</th></tr>
+            <tr class="error"><td>2</td><td>email</td><td>이메일 형식 오류</td><td>@ 및 도메인 포함 필요</td></tr>
+            <tr class="error"><td>3</td><td>id</td><td>ID 중복</td><td>고유한 ID 사용</td></tr>
+            <tr class="error"><td>3</td><td>phone</td><td>전화번호 형식 오류</td><td>010-XXXX-XXXX 형식 사용</td></tr>
+            <tr class="error"><td>3</td><td>department</td><td>필수 필드 누락</td><td>부서명 입력 필요</td></tr>
+            <tr class="error"><td>3</td><td>salary</td><td>음수 값</td><td>0 이상의 값 입력</td></tr>
+        </table>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 10px;">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

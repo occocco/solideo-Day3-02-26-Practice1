@@ -1,0 +1,10 @@
+2024-11-15 09:00:12 INFO 192.168.1.100 LOGIN user=kim_cs status=SUCCESS
+2024-11-15 09:05:23 INFO 192.168.1.101 ACCESS user=lee_yh resource=/admin/dashboard
+2024-11-15 09:10:45 WARNING 192.168.1.102 LOGIN user=park_ms status=FAILED attempt=1
+2024-11-15 09:11:02 WARNING 192.168.1.102 LOGIN user=park_ms status=FAILED attempt=2
+2024-11-15 09:11:15 ERROR 192.168.1.102 LOGIN user=park_ms status=FAILED attempt=3
+2024-11-15 09:15:30 INFO 192.168.1.103 ACCESS user=choi_jh resource=/reports
+2024-11-15 09:20:11 ERROR 192.168.1.104 PERMISSION_DENIED user=jung_sh resource=/admin/settings
+2024-11-15 09:25:45 INFO 192.168.1.105 LOGOUT user=kim_cs
+2024-11-15 09:30:22 CRITICAL 192.168.1.106 SYSTEM_ERROR details="Database connection failed"
+2024-11-15 09:35:10 INFO 192.168.1.100 LOGIN user=kim_cs status=SUCCESS

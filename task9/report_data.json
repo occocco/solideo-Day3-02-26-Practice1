@@ -1,0 +1,21 @@
+{
+  "title": "디지털 행정 서비스 현황 보고서",
+  "date": "2024-11-15",
+  "department": "행정안전부",
+  "summary": {
+    "total_services": 150,
+    "new_services": 25,
+    "improved_services": 40,
+    "satisfaction": 4.3
+  },
+  "departments": [
+    {"name": "행정안전부", "services": 45, "users": 12500000, "satisfaction": 4.2},
+    {"name": "과학기술정보통신부", "services": 38, "users": 15800000, "satisfaction": 4.5},
+    {"name": "국토교통부", "services": 32, "users": 9200000, "satisfaction": 3.9}
+  ],
+  "monthly_stats": [
+    {"month": "1월", "users": 5000000, "services": 120},
+    {"month": "2월", "users": 5200000, "services": 125},
+    {"month": "3월", "users": 5500000, "services": 130}
+  ]
+}

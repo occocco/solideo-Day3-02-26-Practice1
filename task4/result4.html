@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 4: 비밀번호 강도 검증 결과</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+        h1 { color: #667eea; text-align: center; margin-bottom: 30px; }
+        .password-item {
+            background: #f8f9ff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+        .password-item.red { border-left-color: #f44336; }
+        .password-item.orange { border-left-color: #ff9800; }
+        .password-item.yellow { border-left-color: #ffeb3b; }
+        .password-item.green { border-left-color: #4caf50; }
+        .password-item.blue { border-left-color: #2196f3; }
+        .password { font-weight: bold; font-size: 1.2em; margin-bottom: 10px; font-family: monospace; }
+        .score { font-size: 1.5em; font-weight: bold; }
+        .feedback { color: #666; margin-top: 10px; }
+        .feedback li { margin-left: 20px; }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 과제 4: 비밀번호 강도 검증 결과</h1>
+
+        <div class="password-item red">
+            <div class="password">password123</div>
+            <div class="score">점수: 40 (약함)</div>
+            <div class="feedback"><ul><li>영문 대문자 포함 권장</li><li>특수문자 포함 필요</li><li>연속된 문자 사용 지양</li></ul></div>
+        </div>
+
+        <div class="password-item blue">
+            <div class="password">StrongP@ssw0rd2024!</div>
+            <div class="score">점수: 100 (매우 강함)</div>
+            <div class="feedback">개선 필요 없음</div>
+        </div>
+
+        <div class="password-item blue">
+            <div class="password">정부보안기준P@ss2024!</div>
+            <div class="score">점수: 100 (매우 강함)</div>
+            <div class="feedback">개선 필요 없음 - 한글 포함으로 보안 강화</div>
+        </div>
+
+        <div class="password-item red">
+            <div class="password">admin</div>
+            <div class="score">점수: 15 (매우 약함)</div>
+            <div class="feedback"><ul><li>최소 10자 이상 필요</li><li>영문 대문자 포함 권장</li><li>숫자 포함 필요</li><li>특수문자 포함 필요</li></ul></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="../index.html" class="nav-button">← 메인으로</a>
+        </div>
+    </div>
+</body>
+</html>
